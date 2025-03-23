@@ -1,0 +1,36 @@
+{
+  "name": "logic-support",
+  "displayName": "Logic Support",
+  "description": "a logic language tools",
+  "version": "0.0.1",
+  "publisher": "logicer",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "private"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "logic",
+      "aliases": ["logic", "Logic"],
+      "extensions": [".logic"],
+      "configuration": "./language/language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "logic",
+      "scopeName": "source.logic",
+      "path": "./syntaxes/logic.tmLanguage.json"
+    }],
+    "snippets": [
+      {
+        "language": "logic",
+        "path": "./snippets/logic.json"
+      }
+    ]
+  }
+}

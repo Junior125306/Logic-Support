@@ -1,0 +1,142 @@
+{
+    "参数校验": {
+        "prefix": "validate",
+        "body": [
+            "validate {",
+            "    ${1:paramName}: {",
+            "        required: ${2:true}",
+            "    }$0",
+            "},"
+        ],
+        "description": "Logic参数校验块"
+    },
+    "条件语句": {
+        "prefix": "condition",
+        "body": [
+            "${1:condition} :(",
+            "    ${2:// 条件为真时执行的代码}",
+            "), null"
+        ],
+        "description": "Logic条件语句"
+    },
+    "多条件语句": {
+        "prefix": "multicondition",
+        "body": [
+            "${1:condition1} :(",
+            "    ${2:// 条件1为真时执行的代码}",
+            "),",
+            "${3:condition2} :(",
+            "    ${4:// 条件2为真时执行的代码}",
+            "),",
+            "(",
+            "    ${5:// 所有条件都不满足时执行的代码}",
+            ")"
+        ],
+        "description": "Logic多条件语句"
+    },
+    "循环语句": {
+        "prefix": "each",
+        "body": [
+            "${1:items}.each(",
+            "    ${2:// 循环体}",
+            ")"
+        ],
+        "description": "Logic循环语句"
+    },
+    "范围循环": {
+        "prefix": "rangeEach",
+        "body": [
+            "(${1:0}, ${2:10}).each(",
+            "    ${3:// 循环体}",
+            ")"
+        ],
+        "description": "Logic范围循环语句"
+    },
+    "Lambda表达式": {
+        "prefix": "lambda",
+        "body": [
+            "${1:functionName} = (${2:data}) => {",
+            "    ${3:// Lambda函数体}",
+            "}"
+        ],
+        "description": "Logic Lambda表达式"
+    },
+    "异常处理": {
+        "prefix": "trycatch",
+        "body": [
+            "try {",
+            "    ${1:// 尝试执行的代码}",
+            "} catch (Exception e) {",
+            "    ${2:// 异常处理代码}",
+            "}"
+        ],
+        "description": "Logic异常处理"
+    },
+    "断言": {
+        "prefix": "assert",
+        "body": [
+            "assert ${1:condition}"
+        ],
+        "description": "Logic断言语句"
+    },
+    "抛出异常": {
+        "prefix": "throw",
+        "body": [
+            "throw {",
+            "    msg: \"${1:错误信息}\",",
+            "    status: ${2:400}",
+            "}"
+        ],
+        "description": "Logic抛出异常"
+    },
+    "返回值": {
+        "prefix": "return",
+        "body": [
+            "return {",
+            "    success: ${1:true},",
+            "    data: ${2:result}",
+            "}"
+        ],
+        "description": "Logic返回对象"
+    },
+    "日志信息": {
+        "prefix": "log",
+        "body": [
+            "log.${1|info,error,warn,debug|}(\"${2:message}\")"
+        ],
+        "description": "Logic日志记录"
+    },
+    "Logic调用": {
+        "prefix": "logicrun",
+        "body": [
+            "result = logic.run(\"${1:logicName}\", {",
+            "    ${2:key}: ${3:value}",
+            "})"
+        ],
+        "description": "调用其他Logic"
+    },
+    "Logic模板": {
+        "prefix": "logictemplate",
+        "body": [
+            "// 入参校验",
+            "validate {",
+            "    ${1:paramName}: {",
+            "        required: true",
+            "    }",
+            "},",
+            "",
+            "// 获取入参",
+            "${2:paramValue} = data.${1:paramName},",
+            "",
+            "// 业务逻辑",
+            "${3:// 执行业务逻辑}",
+            "",
+            "// 返回结果",
+            "return {",
+            "    success: true,",
+            "    data: ${4:result}",
+            "}"
+        ],
+        "description": "完整的Logic脚本模板"
+    }
+} 

@@ -1,0 +1,123 @@
+// Logic示例文件
+// 用于测试语法高亮功能
+
+// todo 入参校验
+validate {
+    // 这是一个必选参数示例
+    serviceKey: {
+        required: true
+    },
+    // 这是一个指定默认值的参数示例
+    isMobile: {
+        default: false
+    }
+},
+
+// 获取入参
+num1 = data.num1,
+num2 = data.num2,
+
+// 字符串定义
+name = "张三",
+type = $管理员{num1}{1}$,
+moneyValue = "\$15.7",
+1
+// JSON对象和集合
+user = {
+    name: "张三",
+    age: 30
+},
+userName = user.name,
+numbers = [1, 2, 3, 4, 5],
+firstNumber = numbers[0],
+
+// 条件表达式
+a = 6,
+a > 5 :(
+    result = "大于五"
+), null,
+
+// 多条件
+age = 20,
+age > 18 :(
+    status = "成年"
+),
+age > 60 :(
+    status = "老年"
+),
+(
+    status = "未成年"
+),
+
+// 循环
+count = 10,
+count.each(
+    log.info(row),
+    log.info(rowIndex)
+),
+
+// 从0到50的循环
+(0,50).each(
+    row == 25 :(
+        log.info("这是第25个元素"),
+        continue
+    ), null,
+    row == 40 :(
+        log.info("到达第40个元素，中断循环"),
+        break
+    ), null
+),
+
+// 循环JSON集合
+items = [1, 2, 3],
+items.each(
+    log.info(row)
+),
+
+// 循环JSON对象
+person = {
+    name: "张三",
+    age: 14
+},
+person.each(
+    log.info(rowKey + ": " + row)
+),
+
+// Lambda表达式
+testProp = "测试",
+business = (data) => {
+    log.info(testProp),
+    data.name = "世界你好"
+},
+
+//BUG 调用Lambda
+business.apply({
+    name: "你好世界"
+}),
+
+// 调用其他Logic
+params = {
+    num1: 1,
+    num2: 2
+},
+result = logic.run("sum_demo", params),
+log.info(result),
+
+// 异常处理
+try {
+    isAdmin = 0,
+    assert isAdmin == 1
+    assert 1 == 2
+} catch (Exception e) {
+    log.error("发生异常：" + e),
+    throw {
+        msg: "权限不足",
+        status: 401
+    }
+},
+
+// 返回结果
+return {
+    success: true,
+    data: result
+} 

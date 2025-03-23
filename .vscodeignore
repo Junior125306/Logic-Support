@@ -1,0 +1,10 @@
+.vscode/**
+.vscode-test/**
+.gitignore
+.git/**
+.gitattributes
+vsc-extension-quickstart.md
+examples/**
+**/*.map
+node_modules/**
+.npm/**
