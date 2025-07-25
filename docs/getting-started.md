@@ -69,10 +69,10 @@ return {
 
 ### 运行说明
 
-1. 将代码保存为 `.logic` 文件
-2. 在AF SystemV4环境中通过Logic引擎执行
-3. 传入参数：`{name: "张三"}`
-4. 获得结果：`{success: true, message: "你好, 张三!", timestamp: "2023-12-01 10:30:00"}`
+1. 将代码保存为 `.logic` 文件到 `src/main/resources/{模块}/logics/` 目录
+2. 在对应的 `logic.xml` 中注册：`<logic alias="别名" path="文件名.logic" />`
+3. 在 `module.xml` 中注册模块：`<module name="模块名"/>`
+4. 构建部署后通过REST API调用：`POST /logic/别名`
 
 ## 核心语法规则
 
