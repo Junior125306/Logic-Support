@@ -1,0 +1,117 @@
+{
+  "$schema": "https://context7.com/schema.json",
+  "projectTitle": "Logic Script Language - Complete Documentation & VS Code Extension",
+  "description": "Comprehensive documentation for Logic scripting language used in AF SystemV4 architecture, including VS Code extension with syntax highlighting, code snippets, and Context7 integration for AI editors",
+  "version": "1.0.0",
+  "homepage": "https://github.com/your-username/logicsupport-vscodeext",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/logicsupport-vscodeext"
+  },
+  "folders": [
+    "docs",
+    "examples",
+    "snippets"
+  ],
+  "excludeFiles": [
+    "*.vsix",
+    "out/**",
+    "node_modules/**",
+    "*.log",
+    "*.tmp",
+    ".vscode/**",
+    "language/**",
+    "syntaxes/**"
+  ],
+  "rules": [
+    "Logic is a JavaScript/Python-like scripting language for business logic in enterprise applications",
+    "Every expression must end with a comma (,) except return statements",
+    "Conditional expressions must have both true and false branches, use null for empty branches",
+    "Use data.fieldName to access input parameters passed to Logic scripts",
+    "Built-in objects: entity (database ORM), sql (SQL queries), log (logging), logic (calling other Logic scripts)",
+    "Common plugins: commonTools, dateTools, jsonTools, restTools, securityUtils, convertTools",
+    "Database operations: entity.getById(), entity.partialSave(), entity.deleteById()",
+    "SQL operations: sql.querySQL(), sql.execute() with parameterized queries using {data.field}",
+    "Exception handling: try-catch blocks, throw statements with string or object",
+    "Parameter validation: validate blocks with required/default field specifications",
+    "Loop operations: items.each() with row, rowIndex, rowKey variables",
+    "Lambda expressions: (params) => { return result } syntax with .apply() method",
+    "Includes VS Code extension with syntax highlighting, code snippets, and language support"
+  ],
+  "tags": [
+    "logic",
+    "scripting",
+    "af-system",
+    "vscode-extension",
+    "business-logic",
+    "database",
+    "orm",
+    "sql",
+    "enterprise",
+    "java-integration",
+    "plugin-system",
+    "context7",
+    "ai-editors",
+    "syntax-highlighting",
+    "code-snippets"
+  ],
+  "language": "javascript",
+  "categories": [
+    "Programming Languages",
+    "Scripting",
+    "Enterprise Development",
+    "Database Tools",
+    "VS Code Extensions"
+  ],
+  "keywords": [
+    "logic script",
+    "business logic",
+    "enterprise scripting",
+    "database operations",
+    "af systemv4",
+    "syntax highlighting",
+    "code completion",
+    "vs code extension",
+    "context7 documentation",
+    "ai editor support"
+  ],
+  "author": {
+    "name": "Logic Support Team",
+    "email": "support@logic-lang.com"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "capabilities": [
+    "Syntax highlighting for .logic files",
+    "Code snippets and templates",
+    "Bracket matching and auto-completion",
+    "Context7 integration for AI editors",
+    "Comprehensive documentation",
+    "Database operation examples",
+    "Plugin system reference",
+    "Best practices guide",
+    "Troubleshooting help"
+  ],
+  "useCases": [
+    "Enterprise business logic development",
+    "Database-driven application scripting",
+    "Workflow automation",
+    "Data validation and processing",
+    "API integration logic",
+    "User authentication and authorization",
+    "Report generation scripts",
+    "Batch processing operations"
+  ],
+  "relatedTechnologies": [
+    "Java",
+    "Spring Framework",
+    "Hibernate ORM",
+    "SQL Databases",
+    "Redis",
+    "REST APIs",
+    "JSON",
+    "Enterprise Applications"
+  ]
+}
