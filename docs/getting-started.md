@@ -34,7 +34,7 @@ Logic是一种基于Java的解释性脚本语言，专为企业级业务快速�
 
 让我们从一个简单的例子开始：
 
-```javascript
+```logic
 // hello-world.logic
 // 这是你的第一个Logic脚本
 
@@ -77,9 +77,10 @@ return {
 ## 核心语法规则
 
 ### 1. 表达式结束符
+
 **重要**：每个表达式必须以逗号(`,`)结束，除了return语句
 
-```javascript
+```logic
 name = "张三",        // ✅ 正确
 age = 30,            // ✅ 正确
 isAdmin = true,      // ✅ 正确
@@ -88,9 +89,10 @@ return result        // ✅ return语句不需要逗号
 ```
 
 ### 2. 条件表达式
+
 条件表达式必须有true和false两个分支，即使false分支为空也要写`null`
 
-```javascript
+```logic
 // ✅ 正确的条件表达式
 age > 18 : (
     status = "成年人"
@@ -105,9 +107,10 @@ isVip : (
 ```
 
 ### 3. 参数访问
+
 使用 `data.fieldName` 访问传入的参数
 
-```javascript
+```logic
 // 获取传入的参数
 userId = data.userId,
 userName = data.userName,
@@ -115,7 +118,8 @@ userAge = data.age,
 ```
 
 ### 4. 数据类型
-```javascript
+
+```logic
 // 数字
 count = 10,
 price = 15.99,
@@ -144,7 +148,7 @@ user = {
 
 ### 数据库操作
 
-```javascript
+```logic
 // 查询用户信息
 user = entity.getById("t_user", data.userId),
 
@@ -166,7 +170,7 @@ users = sql.querySQL("getUserList", "
 
 ### 循环操作
 
-```javascript
+```logic
 // 遍历数组
 items = [1, 2, 3, 4, 5],
 items.each(
@@ -182,7 +186,7 @@ items.each(
 
 ### 异常处理
 
-```javascript
+```logic
 try {
     // 可能出错的代码
     result = entity.getById("t_user", data.userId),
@@ -200,7 +204,7 @@ try {
 
 ### 1. 标准Logic结构
 
-```javascript
+```logic
 // 1. 参数验证
 validate {
     userId: {
@@ -227,9 +231,9 @@ return {
 
 ### 2. 错误处理
 
-```javascript
+```logic
 // 参数验证
-commonTools.isNotEmpty(data.name) : null, (
+data.name != null && data.name != "" : null, (
     throw "姓名不能为空"
 ),
 
@@ -244,7 +248,7 @@ try {
 
 ### 3. 日志记录
 
-```javascript
+```logic
 // 记录关键步骤
 log.info("开始处理用户注册, userId: " + data.userId),
 
@@ -270,5 +274,3 @@ log.info("用户注册成功, 生成ID: " + result.id),
 - **AI编辑器用户**：通过Context7获得实时的Logic语法帮助
 - **示例代码**：查看 `examples/` 目录中的完整示例
 - **代码片段**：在VS Code中输入关键词快速插入代码模板
-
-开始你的Logic开发之旅吧！🎉

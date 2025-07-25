@@ -1,0 +1,274 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+
+description: Logic脚本编写规则与最佳实践
+globs: *.logic
+alwaysApply: false
+---
+
+# Logic脚本编写规则与最佳实践
+
+## 核心语法速查
+
+### 必记规则
+
+- **表达式结束符**: 每行必须以逗号(,)结束，return语句除外
+- **条件语句**: `条件 : (真分支), (假分支)` - 假分支为空时写null
+- **参数访问**: 使用 `data.fieldName` 访问传入参数
+- **返回值**: return必须有值，不能空返回
+
+### 快速语法参考
+
+```javascript
+// 基本赋值和类型
+name = "张三",
+age = 30,
+isValid = true,
+items = [1, 2, 3],
+user = {name: "张三", age: 30},
+
+// 条件表达式（必须有else，哪怕是null）
+age > 18 : (
+    result = "成年人"
+), (
+    result = "未成年"
+),
+
+// 循环
+items.each(
+    log.info(row),           // row: 当前元素
+    log.info(rowIndex),      // rowIndex: 索引
+    log.info(rowKey)         // rowKey: 对象的key
+),
+
+// 参数验证
+validate {
+    f_name: {
+        required: true,
+        message: "名称不能为空"
+    },
+    f_level: {
+        default: 1
+    }
+},
+
+// 异常处理
+throw "错误信息",
+throw {msg: "错误", status: 400},
+
+// 返回结果
+return result
+```
+
+## 数据库操作
+
+### entity对象 - 实体操作
+
+```javascript
+// 根据ID查询
+user = entity.getById("t_user", data.id),
+
+// 保存或更新（id为null时新增，否则更新）
+saveData = {f_name: "新名称", f_status: 1},
+result = entity.partialSave("t_table_name", saveData),
+
+// 根据ID删除
+entity.deleteById("t_table_name", data.id),
+```
+
+### sql对象 - SQL查询
+
+```javascript
+// 查询SQL
+results = sql.querySQL("queryName", "
+    SELECT * FROM t_table 
+    WHERE f_org_id = '{data.orgId}' 
+    AND f_status = 1
+"),
+
+// 执行更新SQL
+sql.execute("updateName", "
+    UPDATE t_table 
+    SET f_status = 0 
+    WHERE id = {data.id}
+"),
+```
+
+## 插件系统速查
+
+### 插件配置与注册
+
+**项目插件配置：** `src/main/resources/{模块名}/plugins.xml`
+**系统插件配置：** `~/dev/systemv4/af-common/*/src/main/resources/*/plugins.xml`
+**全局插件配置：** `src/main/resources/plugins.xml` (项目级别)
+
+插件注册格式：`<plugin alias='插件别名' class='Java类全限定名'/>`
+
+> **查找所有插件配置：** 使用 `find . -name "plugins.xml" -path "*/resources/*"` 命令查找当前项目的所有插件配置文件
+> 
+> **查找模块列表：** 使用 `ls src/main/resources/ | grep -v '\.'` 命令查看当前项目包含的所有模块
+
+### 项目专用插件 (af-safecheck) - 常用示例
+
+| 插件名 | 主要方法 | 用途 |
+|--------|----------|------|
+| `securityUtils` | `.getCurrentUser()` `.getCurrentUserId()` | 获取当前用户信息 |
+| `FileSaveTools` | `.saveFile(fileData)` | 文件保存工具 |
+| `OrderNumberGenerator` | `.generate()` | 工单编号生成 |
+| `safecheckUtils` | 各种业务方法 | 安检业务工具类 |
+
+### 系统通用插件 (systemv4) - 常用示例
+
+| 分类 | 插件名 | 常用方法 | 说明 |
+|------|--------|----------|------|
+| **基础工具** | `commonTools` | `.isNotEmpty()` `.generateUUID()` | 常用判断和生成 |
+| | `convertTools` | `.toString()` `.toNumber()` | 数据类型转换 |
+| **日期时间** | `dateTools` | `.now()` `.format()` `.parse()` | 日期处理 |
+| **数据处理** | `jsonTools` | `.toJson()` `.fromJson()` | JSON处理 |
+| | `toTree` | `.convert(data, "id", "pid", "children")` | 树形转换 |
+| **网络请求** | `restTools` | `.get()` `.post()` | HTTP请求 |
+| | `restAsyncTools` | `.getAsync()` | 异步HTTP |
+| **编码加密** | `Base64Tools` | `.encode()` `.decode()` | Base64编码 |
+| | `secureTools` | `.encrypt()` | 数据加密 |
+| | `sha1Tools` | `.hash()` | SHA1哈希 |
+
+**注意：** 以上仅为常用插件示例。实际可用插件包括但不限于表格所列，具体插件需查看对应的plugins.xml配置文件。
+
+## 开发模式
+
+### 标准Logic开发流程
+
+```javascript
+// 1. 参数验证
+validate {
+    f_name: {required: true, message: "名称不能为空"}
+},
+
+// 2. 获取用户信息
+currentUser = securityUtils.getCurrentUser(),
+currentTime = dateTools.format(dateTools.now(), "yyyy-MM-dd HH:mm:ss"),
+
+// 3. 业务逻辑处理
+commonTools.isNotEmpty(data.f_name) : null, (
+    throw "参数验证失败"
+),
+
+// 4. 数据库操作
+result = entity.partialSave("t_table", {
+    f_name: data.f_name,
+    f_creator: currentUser.username,
+    f_create_time: currentTime
+}),
+
+// 5. 返回结果
+result
+```
+
+### Logic文件规范
+
+- **命名**: `Get/Save/Delete` + 业务名称 + `.logic`
+- **位置**: `src/main/resources/{模块名}/logics/业务模块/`
+- **注册**: 在 `src/main/resources/{模块名}/logic.xml` 中添加 `<logic alias="别名" path="路径/文件名.logic" />`
+
+> **查看可用模块：** 使用 `ls src/main/resources/ | grep -v '\.'` 命令查看当前项目包含的所有模块
+> 
+> **示例模块结构：**
+> - `safecheck` - 主模块 (当前版本)
+> - `safecheck_v3` - V3兼容模块
+> - `hibernate_v4` - V4数据层模块
+
+## 高级特性
+
+### Logic调用
+
+```javascript
+// 调用其他Logic
+result = logic.run("other_logic", {param: "value"}),
+
+// 异步调用
+logic.runAsync("async_logic", {key: "value"}),
+
+// 远程调用
+result = logic.remoteRun("service-name", "logic-name", params),
+```
+
+### Lambda表达式
+
+```javascript
+// 定义lambda
+processor = (data) => {
+    // 可读取外部变量，不能修改
+    return data.value * 2
+},
+
+// 调用
+result = processor.apply({value: 10}),
+```
+
+### 多数据源
+
+```javascript
+// 注册时指定数据源
+<logic alias="name" path="file.logic" dataSource="datasource-name"/>
+
+// 运行时切换数据源
+dynamicDataSource.withDataSource("datasource-name", (data) => {
+    logic.run("target_logic", {})
+}, {}),
+```
+
+## 常见问题
+
+### 语法错误避免
+
+1. **忘记逗号** - 最常见错误，每个表达式后必须加逗号
+2. **空else块** - 条件表达式必须有else，空的写null
+3. **return语句** - 必须有返回值，不能 `return` 单独使用
+4. **变量名冲突** - 避免使用关键字作为变量名
+
+### 最佳实践
+
+1. **参数化查询** - SQL中用 `{data.field}` 传参，防止注入
+2. **异常处理** - 数据库操作用try-catch包装
+3. **日志记录** - 关键步骤添加log.info记录
+4. **代码注释** - 复杂逻辑添加注释说明
+
+### 调试技巧
+
+```javascript
+// 调试输出
+log.info("变量值: " + JSON.stringify(variable)),
+
+// 断言检查
+assert variable != null,
+
+// 条件断点
+variable == null : (
+    throw "变量为空，检查逻辑"
+), null,
+```
+
+## 内置对象参考
+
+### 关键字
+
+- `data` - 入参对象
+- `validate` - 参数验证块
+- `log` - 日志对象
+- `entity` - 实体操作对象
+- `sql` - SQL操作对象
+- `logic` - Logic调用对象
+- `row/rowIndex/rowKey` - 循环中的当前项/索引/键
+
+### 数据类型
+
+- `number` - 数字: `a = 10`, `b = 15.7`
+- `string` - 字符串: `name = "张三"`
+- `boolean` - 布尔: `flag = true`
+- `array` - 数组: `arr = [1,2,3]`
+- `object` - 对象: `obj = {key: "value"}`
+- `null` - 空值

@@ -2,7 +2,7 @@
   "$schema": "https://context7.com/schema.json",
   "projectTitle": "Logic Script Language - Complete Documentation & VS Code Extension",
   "description": "Comprehensive documentation for Logic scripting language used in AF SystemV4 architecture, including VS Code extension with syntax highlighting, code snippets, and Context7 integration for AI editors",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/your-username/logicsupport-vscodeext",
   "repository": {
     "type": "git",
@@ -16,12 +16,15 @@
   "excludeFiles": [
     "*.vsix",
     "out/**",
+    "old/**",
     "node_modules/**",
     "*.log",
     "*.tmp",
     ".vscode/**",
     "language/**",
-    "syntaxes/**"
+    "syntaxes/**",
+    "CLAUDE.md",
+    "CHANGELOG.md"
   ],
   "rules": [
     "Logic is a JavaScript/Python-like scripting language for business logic in enterprise applications",
@@ -35,8 +38,7 @@
     "Exception handling: try-catch blocks, throw statements with string or object",
     "Parameter validation: validate blocks with required/default field specifications",
     "Loop operations: items.each() with row, rowIndex, rowKey variables",
-    "Lambda expressions: (params) => { return result } syntax with .apply() method",
-    "Includes VS Code extension with syntax highlighting, code snippets, and language support"
+    "Lambda expressions: (params) => { return result } syntax with .apply() method"
   ],
   "tags": [
     "logic",
