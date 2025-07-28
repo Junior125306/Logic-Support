@@ -40,7 +40,7 @@ newUser = {
     f_email: data.email,
     f_phone: data.phone,
     f_status: 1,
-    f_create_time: dateTools.format(dateTools.now(), "yyyy-MM-dd HH:mm:ss"),
+    f_create_time: dateTools.getNow2(),
     f_creator: securityUtils.getCurrentUserId()
 },
 result = entity.partialSave("t_user", newUser),
@@ -56,7 +56,7 @@ updateData = {
     id: data.userId,              // 有ID表示更新操作
     f_name: data.name,
     f_email: data.email,
-    f_update_time: dateTools.format(dateTools.now(), "yyyy-MM-dd HH:mm:ss"),
+    f_create_time: dateTools.getNow2(),
     f_updater: securityUtils.getCurrentUserId()
 },
 result = entity.partialSave("t_user", updateData),
@@ -127,7 +127,7 @@ activeUsers = sql.querySQL("getActiveUsers", "
 sql.execute("updateUserStatus", "
     UPDATE t_user 
     SET f_status = {data.newStatus},
-        f_update_time = '{dateTools.format(dateTools.now(), "yyyy-MM-dd HH:mm:ss")}',
+        f_update_time = '{dateTools.getNow2()}',
         f_updater = {securityUtils.getCurrentUserId()}
     WHERE f_dept_id = {data.deptId}
     AND f_status = {data.oldStatus}
@@ -161,7 +161,7 @@ try {
     user != null : null, (throw "用户不存在"),
     result = entity.partialSave("t_user", updateData)
 } catch (Exception e) {
-    log.error("操作失败: " + e),
+    log.error("操作失败: {e}"),
     throw "系统错误"
 }
 ```

@@ -48,15 +48,18 @@ userInfo = logic.run("getUserById", {userId: data.userId}),
 
 ```logic
 // 异步调用Logic
-logic.runAsync("processDataAsync", {
-    data: largeDataSet,
-    callback: "handleAsyncResult"
+future = logic.runAsync("processDataAsync", {
+    data: largeDataSet
 }),
 
 // 回调处理函数
 handleAsyncResult = (result) => {
     log.info("异步处理完成: " + result.status)
 },
+handleAsyncError = (result) => {
+    log.info("异步处理失败: " + result)
+},
+future.thenAccept(handleAsyncResult).exceptionally(handleAsyncError)
 ```
 
 ### 远程调用
@@ -66,43 +69,6 @@ handleAsyncResult = (result) => {
 remoteResult = logic.remoteRun("userService", "getUserProfile", {
     userId: data.userId
 }),
-```
-
-## 异步操作
-
-### 异步任务
-
-```logic
-// 提交异步任务
-taskId = asyncTask.submit("heavyProcessing", {
-    dataSet: largeData,
-    options: processingOptions
-}),
-
-// 检查任务状态
-status = asyncTask.getStatus(taskId),
-
-// 获取任务结果
-status == "COMPLETED" : (
-    result = asyncTask.getResult(taskId)
-), null,
-```
-
-### 并发处理
-
-```logic
-// 并发执行多个任务
-tasks = [
-    {name: "task1", params: {type: "A"}},
-    {name: "task2", params: {type: "B"}},
-    {name: "task3", params: {type: "C"}}
-],
-
-results = [],
-tasks.each(
-    taskResult = logic.runAsync(row.name, row.params),
-    results.push(taskResult)
-),
 ```
 
 ## 多数据源操作

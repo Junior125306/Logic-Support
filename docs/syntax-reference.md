@@ -119,8 +119,8 @@ score >= 90 : (
 ```logic
 items = [1, 2, 3],
 items.each(
-    log.info("元素: " + row),        // row: 当前元素
-    log.info("索引: " + rowIndex)     // rowIndex: 索引
+    log.info("元素: {row}"),        // row: 当前元素
+    log.info("索引: {rowIndex}")     // rowIndex: 索引
 ),
 ```
 
@@ -129,8 +129,8 @@ items.each(
 ```logic
 user = {name: "张三", age: 30},
 user.each(
-    log.info("键: " + rowKey),        // rowKey: 键名
-    log.info("值: " + row)            // row: 值
+    log.info("键: {rowKey}"),        // rowKey: 键名
+    log.info("值: {row}")            // row: 值
 ),
 ```
 
@@ -138,7 +138,7 @@ user.each(
 
 ```logic
 (1, 10).each(
-    log.info("数字: " + row)
+    log.info("数字: {row}")
 ),
 ```
 
@@ -154,7 +154,7 @@ items.each(
         break      // 终止循环
     ), null,
     
-    log.info("处理: " + row)
+    log.info("处理: {row}")
 ),
 ```
 
@@ -228,7 +228,7 @@ throw {
 ```logic
 // 定义Lambda
 processor = (data) => {
-    log.info("处理: " + data.name),
+    log.info("处理: {data.name}"),
     return data.value * 2
 },
 
@@ -251,7 +251,7 @@ calculator = (input) => {
 name = "张三",
 
 // 模板字符串
-greeting = $你好，{name}！今天是{dateTools.format(dateTools.now(), "yyyy-MM-dd")}$,
+greeting = $你好，{name}！今天是{dateTools.getNow()}$,
 
 // 转义字符
 quoted = "他说：\"Logic很简单\"",
@@ -348,7 +348,7 @@ data.name != null && data.name != "" : null, (
 try {
     result = entity.partialSave("t_user", saveData)
 } catch (Exception e) {
-    log.error("保存失败: " + e),
+    log.error("保存失败: {e}"),
     throw "系统错误，请稍后重试"
 }
 ```

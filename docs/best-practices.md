@@ -13,7 +13,7 @@ validate {
 
 // 2. 参数获取
 userId = data.userId,
-currentTime = dateTools.format(dateTools.now(), "yyyy-MM-dd HH:mm:ss"),
+currentTime = dateTools.getNow2(),
 
 // 3. 业务逻辑验证
 userId != null && userId != "" : null, (
@@ -91,16 +91,16 @@ usersWithProfiles = sql.querySQL("joinQuery", "
 
 ```logic
 // 关键业务操作
-log.info("用户登录: " + user.name),
+log.info("用户登录: {user.name}"),
 
 // 错误信息
-log.error("数据保存失败: " + e),
+log.error("数据保存失败: {e}"),
 
 // 调试信息
-log.debug("处理参数: " + jsonTools.toJson(data)),
+log.debug("处理参数: {data}"),
 
 // 警告信息
-log.warn("用户权限不足: " + user.id),
+log.warn("用户权限不足: {user.id}"),
 ```
 
 ## 代码规范
@@ -148,6 +148,7 @@ return {success: true, data: processedData}
 users = sql.querySQL("safe", "SELECT * FROM t_user WHERE name = {data.name}"),
 
 // ❌ 避免字符串拼接
+// logic中字符串拼接只能使用 参数处理 "SELECT * FROM t_user WHERE name = '{}{data.name}'"
 // badQuery = "SELECT * FROM t_user WHERE name = '" + data.name + "'",
 ```
 

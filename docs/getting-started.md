@@ -53,17 +53,17 @@ userName = data.name,
 userName == "世界" : (
     greeting = "Hello, World!"
 ), (
-    greeting = "你好, " + userName + "!"
+    greeting = "你好, {userName}!"
 ),
 
 // 记录日志
-log.info("生成问候语: " + greeting),
+log.info("生成问候语: {greeting}"),
 
 // 返回结果
 return {
     success: true,
     message: greeting,
-    timestamp: dateTools.now()
+    timestamp: dateTools.getNow2()
 }
 ```
 
@@ -174,13 +174,13 @@ users = sql.querySQL("getUserList", "
 // 遍历数组
 items = [1, 2, 3, 4, 5],
 items.each(
-    log.info("当前元素: " + row),
-    log.info("索引: " + rowIndex)
+    log.info("当前元素: {row}"),
+    log.info("索引: {rowIndex}")
 ),
 
 // 范围循环
 (1, 10).each(
-    log.info("数字: " + row)
+    log.info("数字: {row}")
 ),
 ```
 
@@ -192,7 +192,7 @@ try {
     result = entity.getById("t_user", data.userId),
     assert result != null
 } catch (Exception e) {
-    log.error("查询用户失败: " + e),
+    log.error("查询用户失败: {e}"),
     throw {
         msg: "用户不存在",
         status: 404
@@ -241,7 +241,7 @@ data.name != null && data.name != "" : null, (
 try {
     result = entity.partialSave("t_user", saveData)
 } catch (Exception e) {
-    log.error("保存用户失败: " + e),
+    log.error("保存用户失败: {e}"),
     throw "系统错误，请稍后重试"
 }
 ```
@@ -250,13 +250,13 @@ try {
 
 ```logic
 // 记录关键步骤
-log.info("开始处理用户注册, userId: " + data.userId),
+log.info("开始处理用户注册, userId: {data.userId}"),
 
 // 记录业务逻辑
 log.info("用户验证通过, 开始保存数据"),
 
 // 记录结果
-log.info("用户注册成功, 生成ID: " + result.id),
+log.info("用户注册成功, 生成ID: {result.id}"),
 ```
 
 ## 下一步学习

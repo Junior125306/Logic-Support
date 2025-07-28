@@ -1,6 +1,6 @@
 {
   "$schema": "https://context7.com/schema.json",
-  "projectTitle": "Logic Script Language - Complete Documentation & VS Code Extension",
+  "projectTitle": "Logic Language",
   "description": "Comprehensive documentation for Logic scripting language used in AF SystemV4 architecture, including VS Code extension with syntax highlighting, code snippets, and Context7 integration for AI editors",
   "version": "1.0.1",
   "homepage": "https://github.com/your-username/logicsupport-vscodeext",

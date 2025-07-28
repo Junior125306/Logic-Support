@@ -97,7 +97,7 @@ quotient = commonTools.div(data.num1, data.num2),
 
 // 示例用法
 orderId = commonTools.getUUID(),
-log.info("生成订单ID: " + orderId),
+log.info("生成订单ID: {orderId}"),
 ```
 
 #### convertTools - 数据类型转换
@@ -285,7 +285,7 @@ try {
     apiResult = restTools.get("http://external-api.com/data", null),
     data = jsonTools.convertToJson(apiResult)
 } catch (Exception e) {
-    log.error("API调用失败: " + e),
+    log.error("API调用失败: {e}"),
     throw "外部服务暂时不可用"
 }
 ```
@@ -295,7 +295,7 @@ try {
 ```logic
 // 异步GET请求
 callback = (response) => {
-    log.info("异步请求完成: " + response),
+    log.info("异步请求完成: {response}"),
     // 处理响应数据
     result = jsonTools.convertToJson(response)
 },
@@ -318,11 +318,11 @@ restAsyncTools.postAsync("http://api.example.com/async", asyncData, callback),
 // Base64编码
 originalText = "Hello, Logic!",
 encoded = Base64Tools.encode(originalText),
-log.info("编码结果: " + encoded),
+log.info("编码结果: {encoded}"),
 
 // Base64解码
 decoded = Base64Tools.decode(encoded),
-log.info("解码结果: " + decoded),
+log.info("解码结果: {decoded}"),
 
 // 文件数据编码
 fileData = data.fileContent,
@@ -370,7 +370,7 @@ userRecord = {
 // 生成哈希值
 inputData = data.username + data.email,
 hashValue = sha1Tools.hash(inputData),
-log.info("哈希值: " + hashValue),
+log.info("哈希值: {hashValue}"),
 
 // 文件完整性校验
 fileContent = data.fileData,
@@ -406,7 +406,7 @@ fileData = data.fileContent,
 fileName = data.fileName,
 savedPath = fileManager.saveFile(fileData, fileName),
 
-log.info("文件保存路径: " + savedPath),
+log.info("文件保存路径: {savedPath}"),
 ```
 
 #### 业务工具插件
@@ -416,7 +416,7 @@ log.info("文件保存路径: " + savedPath),
 orderNumber = numberGenerator.generateOrderNumber(),
 ticketNumber = numberGenerator.generateTicketNumber(),
 
-log.info("生成订单号: " + orderNumber),
+log.info("生成订单号: {orderNumber}"),
 ```
 
 ## 插件发现
